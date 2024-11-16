@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Платформа Портфолио</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <%- include('partials/navbar') %>
+
+    <div class="container">
+        <h1>Моё Портфолио</h1>
+        <% if (success_msg) { %>
+            <p class="success"><%= success_msg %></p>
+        <% } %>
+        <% if (error_msg) { %>
+            <p class="error"><%= error_msg %></p>
+        <% } %>
+        <% if (items.length === 0) { %>
+            <p>Нет доступных портфолио-элементов.</p>
+        <% } else { %>
+            <% items.forEach(item => { %>
+                <div class="portfolio-item">
+                    <h2><%= item.title %></h2>
+                    <div class="carousel">
+                        <% item.images.forEach(image => { %>
+                            <img src="<%= image %>" alt="<%= item.title %>">
+                        <% }) %>
+                    </div>
+                    <p><%= item.description %></p>
+                    <p>Создано: <%= item.createdAt.toLocaleString() %></p>
+                    <p>Обновлено: <%= item.updatedAt.toLocaleString() %></p>
+                    <% if (user && user.role === 'admin') { %>
+                        <a href="/edit/<%= item.id %>">Редактировать</a>
+                        <form action="/delete/<%= item.id %>?_method=DELETE" method="POST" style="display:inline;">
+                            <button type="submit">Удалить</button>
+                        </form>
+                    <% } %>
+                </div>
+            <% }) %>
+        <% } %>
+    </div>
+
+    <%- include('partials/footer') %>
+</body>
+</html>

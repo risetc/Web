@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Портфолио</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <%- include('partials/navbar') %>
+  <div class="container">
+    <h1>Моё Портфолио</h1>
+    <% if (items.length === 0) { %>
+      <p>Нет доступных портфолио-элементов.</p>
+    <% } else { %>
+      <% items.forEach(item => { %>
+        <div class="portfolio-item">
+          <h2><%= item.title %></h2>
+          <div class="carousel">
+            <% item.images.forEach(image => { %>
+              <img src="<%= image %>" alt="<%= item.title %>">
+            <% }) %>
+          </div>
+          <p><%= item.description %></p>
+          <p>Создано: <%= item.createdAt.toLocaleString() %></p>
+          <% if (session.user && session.user.role === 'admin') { %>
+            <a href="/edit/<%= item._id %>">Редактировать</a>
+            <form action="/delete/<%= item._id %>" method="POST">
+              <button type="submit">Удалить</button>
+            </form>
+          <% } %>
+        </div>
+      <% }) %>
+    <% } %>
+  </div>
+  <%- include('partials/footer') %>
+</body>
+</html>

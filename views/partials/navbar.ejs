@@ -1,0 +1,16 @@
+<nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <% if (session.user) { %>
+        <% if (session.user.role === 'admin' || session.user.role === 'editor') { %>
+          <li><a href="/create">Create Portfolio Item</a></li>
+        <% } %>
+        <li><a href="/logout">Logout</a></li>
+        <li>User: <%= session.user.username %> (<%= session.user.role %>)</li>
+      <% } else { %>
+        <li><a href="/login">Login</a></li>
+        <li><a href="/register">Register</a></li>
+      <% } %>
+    </ul>
+  </nav>
+  
