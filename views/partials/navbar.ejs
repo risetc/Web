@@ -4,7 +4,7 @@
       <li><a href="/">Home</a></li>
       <% if (session.user) { %>
         <% if (session.user.role === 'admin' || session.user.role === 'editor') { %>
-          <li><a href="/create">Create Portfolio</a></li>
+          <li><a href="/create">Create Places</a></li>
         <% } %>
         <li><a href="/logout">Logout</a></li>
         <li>User: <%= session.user.username %> (<%= session.user.role %>)</li>

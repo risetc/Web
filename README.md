@@ -9,7 +9,7 @@ Portfolio Platform is a web application developed using Node.js, Express and Mon
 - User registration and login with 2FA support.
 - Portfolio resource management (create, edit, delete).
 - View interesting places with images.
-- Display the latest news about Astana.
+- Display the latest news.
 - Get random jokes.
 - Display the current time in the panel.
 

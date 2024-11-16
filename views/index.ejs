@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Interesting Places in Astana</title>
+  <title>Places</title>
   <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
@@ -11,26 +11,8 @@
     <div class="left-section">
       <h1>Interesting Places in Astana</h1>
       <p>Astana, the capital of Kazakhstan, is renowned for its modern architectural solutions and unique landmarks. Below are some of the old and interesting places worth visiting.</p>
-      
-      <% places.forEach(place => { %>
-        <div class="place">
-          <h2><%= place.name %></h2>
-          <p><%= place.description %></p>
-          <div class="carousel">
-            <div class="carousel-inner">
-              <% place.images.forEach(image => { %>
-                <img src="<%= image %>" alt="<%= place.name %>">
-              <% }) %>
-            </div>
-            <button class="prev">&#10094;</button>
-            <button class="next">&#10095;</button>
-          </div>
-        </div>
-      <% }) %>
-
-      <h2> Other Interesting Places in Astana</h2>
       <% if (items.length === 0) { %>
-        <p>No places items available.</p>
+        <p>No portfolio items available.</p>
       <% } else { %>
         <% items.forEach(item => { %>
           <div class="portfolio-item">
@@ -51,7 +33,7 @@
                 <a href="/edit/<%= item._id %>" class="btn">Edit</a>
               <% } %>
               <% if (session.user.role === 'admin') { %>
-                <form action="/delete/<%= item._id %>" method="POST" style="display: inline;">
+                <form action="/delete/<%= item._id %>" method="POST" style="display:inline;">
                   <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
               <% } %>
@@ -62,7 +44,7 @@
     </div>
     
     <div class="right-section">
-      <h2>Latest News about Astana</h2>
+      <h2>Latest News about</h2>
       <% news.forEach(article => { %>
         <div class="news-article">
           <h3><a href="<%= article.url %>" target="_blank"><%= article.title %></a></h3>
