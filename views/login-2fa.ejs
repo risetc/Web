@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Entrance - 2FA</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <%- include('partials/navbar') %>
+  <div class="container">
+    <h1>Confirmation 2FA</h1>
+    <form action="/login-2fa" method="POST">
+      <label for="token">Token 2FA:</label>
+      <input type="text" name="token" id="token" required>
+      <button type="submit" class="btn">Login</button>
+    </form>
+  </div>
+  <%- include('partials/footer') %>
+</body>
+</html>

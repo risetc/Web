@@ -1,37 +1,109 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Портфолио</title>
+  <title>Interesting Places in Astana</title>
   <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
   <%- include('partials/navbar') %>
-  <div class="container">
-    <h1>Моё Портфолио</h1>
-    <% if (items.length === 0) { %>
-      <p>Нет доступных портфолио-элементов.</p>
-    <% } else { %>
-      <% items.forEach(item => { %>
-        <div class="portfolio-item">
-          <h2><%= item.title %></h2>
+  <div class="container main-content">
+    <div class="left-section">
+      <h1>Interesting Places in Astana</h1>
+      <p>Astana, the capital of Kazakhstan, is renowned for its modern architectural solutions and unique landmarks. Below are some of the old and interesting places worth visiting.</p>
+      
+      <% places.forEach(place => { %>
+        <div class="place">
+          <h2><%= place.name %></h2>
+          <p><%= place.description %></p>
           <div class="carousel">
-            <% item.images.forEach(image => { %>
-              <img src="<%= image %>" alt="<%= item.title %>">
-            <% }) %>
+            <div class="carousel-inner">
+              <% place.images.forEach(image => { %>
+                <img src="<%= image %>" alt="<%= place.name %>">
+              <% }) %>
+            </div>
+            <button class="prev">&#10094;</button>
+            <button class="next">&#10095;</button>
           </div>
-          <p><%= item.description %></p>
-          <p>Создано: <%= item.createdAt.toLocaleString() %></p>
-          <% if (session.user && session.user.role === 'admin') { %>
-            <a href="/edit/<%= item._id %>">Редактировать</a>
-            <form action="/delete/<%= item._id %>" method="POST">
-              <button type="submit">Удалить</button>
-            </form>
-          <% } %>
         </div>
       <% }) %>
-    <% } %>
+
+      <h2> Other Interesting Places in Astana</h2>
+      <% if (items.length === 0) { %>
+        <p>No places items available.</p>
+      <% } else { %>
+        <% items.forEach(item => { %>
+          <div class="portfolio-item">
+            <h2><%= item.title %></h2>
+            <div class="carousel">
+              <div class="carousel-inner">
+                <% item.images.forEach(image => { %>
+                  <img src="<%= image %>" alt="<%= item.title %>">
+                <% }) %>
+              </div>
+              <button class="prev">&#10094;</button>
+              <button class="next">&#10095;</button>
+            </div>
+            <p><%= item.description %></p>
+            <p>Created: <%= item.createdAt.toLocaleString() %></p>
+            <% if (session.user) { %>
+              <% if (session.user.role === 'admin' || session.user.role === 'editor') { %>
+                <a href="/edit/<%= item._id %>" class="btn">Edit</a>
+              <% } %>
+              <% if (session.user.role === 'admin') { %>
+                <form action="/delete/<%= item._id %>" method="POST" style="display: inline;">
+                  <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+              <% } %>
+            <% } %>
+          </div>
+        <% }) %>
+      <% } %>
+    </div>
+    
+    <div class="right-section">
+      <h2>Latest News about Astana</h2>
+      <% news.forEach(article => { %>
+        <div class="news-article">
+          <h3><a href="<%= article.url %>" target="_blank"><%= article.title %></a></h3>
+          <p>Author: <%= article.by %></p>
+        </div>
+      <% }) %>
+
+      <div class="joke-section">
+        <h2>Joke</h2>
+        <p><%= joke.setup %></p>
+        <p><strong><%= joke.punchline %></strong></p>
+      </div>
+    </div>
   </div>
+
   <%- include('partials/footer') %>
+
+  <script>
+    const carousels = document.querySelectorAll('.carousel');
+
+    carousels.forEach(carousel => {
+      const inner = carousel.querySelector('.carousel-inner');
+      const prev = carousel.querySelector('.prev');
+      const next = carousel.querySelector('.next');
+      let counter = 0;
+      const total = carousel.querySelectorAll('img').length;
+
+      next.addEventListener('click', () => {
+        if (counter < total - 1) {
+          counter++;
+          inner.style.transform = `translateX(-${counter * 100}%)`;
+        }
+      });
+
+      prev.addEventListener('click', () => {
+        if (counter > 0) {
+          counter--;
+          inner.style.transform = `translateX(-${counter * 100}%)`;
+        }
+      });
+    });
+  </script>
 </body>
 </html>

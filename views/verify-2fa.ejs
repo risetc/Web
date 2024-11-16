@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Verify 2FA</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <%- include('partials/navbar') %>
+  <div class="container">
+    <h1>Setup 2FA</h1>
+    <p>Scan the QR code using your authenticator app and enter the generated token.</p>
+    <img src="<%= qrCodeDataURL %>" alt="QR Code">
+    <form action="/verify-2fa" method="POST">
+      <label for="token">2FA Token:</label>
+      <input type="text" name="token" id="token" required>
+      <button type="submit" class="btn">Verify</button>
+    </form>
+  </div>
+  <%- include('partials/footer') %>
+</body>
+</html>

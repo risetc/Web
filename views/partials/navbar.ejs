@@ -1,9 +1,10 @@
 <nav>
-    <ul>
+  <ul>
+    <div>
       <li><a href="/">Home</a></li>
       <% if (session.user) { %>
         <% if (session.user.role === 'admin' || session.user.role === 'editor') { %>
-          <li><a href="/create">Create Portfolio Item</a></li>
+          <li><a href="/create">Create Portfolio</a></li>
         <% } %>
         <li><a href="/logout">Logout</a></li>
         <li>User: <%= session.user.username %> (<%= session.user.role %>)</li>
@@ -11,6 +12,20 @@
         <li><a href="/login">Login</a></li>
         <li><a href="/register">Register</a></li>
       <% } %>
-    </ul>
-  </nav>
+    </div>
+    <div>
+      <li>Current Time: <span id="current-time"><%= currentTime %></span></li>
+    </div>
+  </ul>
   
+  <script>
+    function updateTime() {
+      const now = new Date()
+      const hours = String(now.getHours()).padStart(2, '0')
+      const minutes = String(now.getMinutes()).padStart(2, '0')
+      document.getElementById('current-time').textContent = `${hours}:${minutes}`
+    }
+
+    setInterval(updateTime, 60000)
+  </script>
+</nav>

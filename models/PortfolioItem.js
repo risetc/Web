@@ -1,13 +1,16 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
 const PortfolioItemSchema = new mongoose.Schema({
-  title: String,
-  description: String,
-  images: [String],
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-});
+  title: { type: String, required: true },
+  description: { type: String, required: true },
+  images: [{ type: String, required: true }],
+  createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now }
+})
 
-module.exports = mongoose.model('PortfolioItem', PortfolioItemSchema);
+PortfolioItemSchema.pre('save', function(next) {
+  this.updatedAt = Date.now()
+  next()
+})
+
+module.exports = mongoose.model('PortfolioItem', PortfolioItemSchema)

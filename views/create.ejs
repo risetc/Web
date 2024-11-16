@@ -1,28 +1,65 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Создать Портфолио</title>
+  <title>Create Portfolio</title>
   <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
   <%- include('partials/navbar') %>
   <div class="container">
-    <h1>Создать новый элемент портфолио</h1>
+    <h1>Create New Portfolio Item</h1>
     <form action="/create" method="POST">
-      <label for="title">Название:</label>
+      <label for="title">Title:</label>
       <input type="text" name="title" id="title" required>
-      <label for="description">Описание:</label>
-      <textarea name="description" id="description" required></textarea>
-      <label for="image1">URL изображения 1:</label>
-      <input type="url" name="image1" id="image1" required>
-      <label for="image2">URL изображения 2:</label>
-      <input type="url" name="image2" id="image2" required>
-      <label for="image3">URL изображения 3:</label>
-      <input type="url" name="image3" id="image3" required>
-      <button type="submit">Создать</button>
+      
+      <label for="description">Description:</label>
+      <textarea name="description" id="description" rows="5" required></textarea>
+      
+      <h3>Images</h3>
+      <ul class="image-list">
+        <li class="image-item">
+          <input type="url" name="images[]" placeholder="Image URL 1" required>
+          <button type="button" onclick="removeImageField(this)" class="btn btn-danger">Delete</button>
+        </li>
+        <li class="image-item">
+          <input type="url" name="images[]" placeholder="Image URL 2" required>
+          <button type="button" onclick="removeImageField(this)" class="btn btn-danger">Delete</button>
+        </li>
+        <li class="image-item">
+          <input type="url" name="images[]" placeholder="Image URL 3" required>
+          <button type="button" onclick="removeImageField(this)" class="btn btn-danger">Delete</button>
+        </li>
+      </ul>
+      
+      <button type="button" onclick="addImageField()" class="btn btn-secondary">Add Image</button>
+      
+      <button type="submit" class="btn">Create</button>
     </form>
   </div>
+  
+  <script>
+    function addImageField() {
+      const imageList = document.querySelector('.image-list')
+      if (imageList.children.length >= 6) {
+        alert('Maximum of 6 images allowed.')
+        return
+      }
+      const li = document.createElement('li')
+      li.className = 'image-item'
+      li.innerHTML = `
+        <input type="url" name="images[]" placeholder="Image URL" required>
+        <button type="button" onclick="removeImageField(this)" class="btn btn-danger">Delete</button>
+      `
+      imageList.appendChild(li)
+    }
+
+    function removeImageField(button) {
+      const li = button.parentElement
+      li.remove()
+    }
+  </script>
+  
   <%- include('partials/footer') %>
 </body>
 </html>
